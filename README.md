@@ -87,6 +87,8 @@ npm start
 
 This application was deployed using the manual zip upload method:
 
+zip -r application.zip . -x "*.git*" "node_modules/*"
+
 #### Steps Performed:
 1. **Prepare Application Package:**
    - Created a zip file containing all project files
