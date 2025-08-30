@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
       <div class="container">
         <header>
           <h1>AWS Elastic Beanstalk</h1>
-          <p>Node.js Application Deployment</p>
+          <p>Node.js Application Deployment with CI/CD</p>
         </header>
         
         <div class="content">
