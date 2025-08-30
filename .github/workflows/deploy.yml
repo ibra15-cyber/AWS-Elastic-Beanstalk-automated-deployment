@@ -32,6 +32,14 @@ jobs:
       
     - name: Create deployment package
       run: |
+        # Create consistent timestamp for this deployment
+        TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+        echo "TIMESTAMP=$TIMESTAMP" >> $GITHUB_ENV
+        
+        # Create version label using git commit and timestamp
+        VERSION_LABEL="${{ github.sha }}-$TIMESTAMP"
+        echo "VERSION_LABEL=$VERSION_LABEL" >> $GITHUB_ENV
+        
         # Create a deployment directory
         mkdir -p deployment
         
@@ -40,13 +48,13 @@ jobs:
         cp package.json deployment/
         cp package-lock.json deployment/
         
-        # Create zip file with timestamp
+        # Create zip file with consistent naming
         cd deployment
-        zip -r ../week3-app-$(date +%Y%m%d-%H%M%S).zip .
+        zip -r ../week3-app-$TIMESTAMP.zip .
         cd ..
         
         # Set the zip file name as environment variable for later steps
-        echo "ZIP_FILE=$(ls week3-app-*.zip)" >> $GITHUB_ENV
+        echo "ZIP_FILE=week3-app-$TIMESTAMP.zip" >> $GITHUB_ENV
         
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v4
@@ -65,17 +73,20 @@ jobs:
         
     - name: Deploy to Elastic Beanstalk
       run: |
-        # Create new application version
+        # Create new application version using consistent version label
         aws elasticbeanstalk create-application-version \
           --application-name ${{ secrets.EB_APPLICATION_NAME }} \
-          --version-label ${{ github.sha }}-$(date +%Y%m%d-%H%M%S) \
+          --version-label $VERSION_LABEL \
           --source-bundle S3Bucket=${{ secrets.S3_BUCKET_NAME }},S3Key=$S3_OBJECT_KEY \
           --description "Deployed from GitHub Actions - Commit: ${{ github.sha }}"
           
-        # Update environment with new version
+        # Wait a moment for version to be processed
+        sleep 5
+          
+        # Update environment with the same version label
         aws elasticbeanstalk update-environment \
           --environment-name ${{ secrets.EB_ENVIRONMENT_NAME }} \
-          --version-label ${{ github.sha }}-$(date +%Y%m%d-%H%M%S)
+          --version-label $VERSION_LABEL
           
     - name: Wait for deployment
       run: |
