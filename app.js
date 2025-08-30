@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
       <div class="container">
         <header>
           <h1>AWS Elastic Beanstalk</h1>
-          <p>Node.js Application Deployment with CI/CD using node.JS trigger iam user</p>
+          <p>Node.js Application Deployment with CI/CD USING node.JS trigger iam user</p>
         </header>
         
         <div class="content">
