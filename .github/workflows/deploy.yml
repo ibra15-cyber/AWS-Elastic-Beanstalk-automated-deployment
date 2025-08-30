@@ -4,10 +4,10 @@ name: Deploy to AWS Elastic Beanstalk
 on:
   push:
     branches:
-      - main  # or master, depending on your default branch
+      - master  # or master, depending on your default branch
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
