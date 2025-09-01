@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
       <title>Elastic Beanstalk Node.js App</title>
       <style>
         body { font-family: Arial, sans-serif; margin: 40px; }
-        .container { max-width: 800px; margin: 0 auto; }g
+        .container { max-width: 800px; margin: 0 auto; }
         header { background: #232f3e; color: white; padding: 20px; border-radius: 5px; }
         h1 { margin: 0; }
         .content { padding: 20px; border: 1px solid #ddd; border-radius: 5px; margin-top: 20px; }
@@ -21,8 +21,8 @@ app.get('/', (req, res) => {
     <body>
       <div class="container">
         <header>
-          <h1>AWS Elastic Beanstalk </h1>
-          <p>Node.js Application Deployment with CI/CD trigger</p>
+          <h1>AWS Elastic Beanstalk</h1>
+          <p>Node.js Application Deployment with CI/CD using node.JS trigger iam user</p>
         </header>
         
         <div class="content">
